@@ -16,14 +16,14 @@ cask "dataweave-studio" do
   end
 
   auto_updates true
+  depends_on :macos
 
   app "DataWeave Studio.app"
 
   # The app is ad-hoc signed, not notarized (no Apple Developer account), so
   # macOS would call the quarantined download "damaged". Clear the flag.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-cr", "#{appdir}/DataWeave Studio.app"]
+  postflight_steps do
+    run "xattr", args: ["-cr", "{{appdir}}/DataWeave Studio.app"]
   end
 
   zap trash: [
