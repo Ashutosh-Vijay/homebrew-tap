@@ -1,0 +1,32 @@
+name: Install test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  install:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Style
+        run: |
+          brew tap ashutosh-vijay/tap "$GITHUB_WORKSPACE"
+          brew trust ashutosh-vijay/tap || true
+          brew style Casks/dataweave-studio.rb
+
+      - name: Install the cask like a user would
+        run: brew install --cask ashutosh-vijay/tap/dataweave-studio
+
+      - name: Quarantine flag is gone and the app starts
+        run: |
+          app="/Applications/DataWeave Studio.app"
+          if xattr -r "$app" | grep -q com.apple.quarantine; then echo "still quarantined"; exit 1; fi
+          codesign -dv "$app" 2>&1 | grep -E 'Identifier|Signature' || true
+          open "$app"
+          sleep 20
+          pgrep -fl "DataWeave Studio" || { echo "app is not running"; exit 1; }
+
+      - name: Uninstall
+        run: brew uninstall --cask --zap dataweave-studio
