@@ -1,9 +1,9 @@
 cask "dataweave-studio" do
   arch arm: "aarch64", intel: "x64"
 
-  version "3.7.0"
-  sha256 arm:   "d586d5647302a3739600d68a0b5767b4ef292e7799f2d7b113cd03a19a930e21",
-         intel: "e2e2b76d4c255238eabf7105d59627469782c6a9b3686b188af110f2d3c6fb15"
+  version "3.7.1"
+  sha256 arm:   "385bfff78209eed4086c45ed5ab0c127608edc3b1d4db1ca4244765fbf33d6ff",
+         intel: "e21f25264a68776f21b0b0b7100f72e6cf44cca438e29c25e8f812d51903517c"
 
   url "https://github.com/Ashutosh-Vijay/DataWeave-Studio/releases/download/v#{version}/DataWeave.Studio_#{version}_#{arch}.dmg"
   name "DataWeave Studio"
